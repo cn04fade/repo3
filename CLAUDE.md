@@ -48,6 +48,9 @@ Contain reference material, source documents and examples
 /drafts
 Contain work in progress and temporary files
 
+/pdfs
+Contain PDF exports of proofs and proof attempts
+
 # Agent Behavior
 
 If you are given a mathematical problem, work in the following steps:
