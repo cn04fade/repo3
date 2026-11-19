@@ -1,10 +1,10 @@
 ---
-name: prove
-description: Generate a rigorous proof for a mathematical (mainly graph theory) problem following the project's proof workflow. Use when the user gives a mathematical statement to prove, disprove, or investigate, or types /prove.
+name: prove-workflow
+description: Generate a rigorous proof for a mathematical (mainly graph theory) problem following the project's proof workflow. Use when the user gives a mathematical statement to prove, disprove, or investigate, or types /prove-workflow.
 argument-hint: <problem statement>
 ---
 
-# /prove — Proof generation workflow
+# /prove-workflow — Proof generation workflow
 
 The problem to work on: $ARGUMENTS
 

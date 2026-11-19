@@ -66,7 +66,7 @@ Never prioritize speed over quality.
 # Proof Workflow
 
 - The full process is defined in `workflows/proof-workflow.md`; output templates are in `workflows/templates/`.
-- Start it with `/prove <problem>` (skill in `.claude/skills/prove/`). Also follow it when a problem is given without the command.
+- Start it with `/prove-workflow <problem>` (skill in `.claude/skills/prove-workflow/`). Also follow it when a problem is given without the command.
 - Finished proofs are checked by the `proof-reviewer` agent (`.claude/agents/proof-reviewer.md`) before delivery.
 - Complete proofs go to `outputs/`; incomplete attempts (stuck reports) go to `drafts/` and are also summarised in the chat.
 - Write math in Markdown with LaTeX (`$...$`, `$$...$$`).

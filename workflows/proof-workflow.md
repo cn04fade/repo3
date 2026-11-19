@@ -2,7 +2,7 @@
 
 This document defines how a mathematical problem (mainly graph theory) is turned into a rigorous proof, or into a clear report of where the attempt got stuck.
 
-It is executed by the `/prove` skill (`.claude/skills/prove/SKILL.md`). Quality always has priority over speed.
+It is executed by the `/prove-workflow` skill (`.claude/skills/prove-workflow/SKILL.md`). Quality always has priority over speed.
 
 ---
 
