@@ -1,1 +1,20 @@
-READ
+Call Skills with "/" and Agents with "@"
+
+Agents:
+proof-generator:
+Writes or revises a proof, counterexample or stuck report by following workflows/proof-workflow.md. It saves its work in proof-exchange/<problem-name>/ and does not do the independent review.
+
+proof-reviewer:
+Strictly and independently checks a written proof for errors and gaps, then gives the verdict ACCEPT or REJECT. It judges only the problem and the written proof, not the generator's reasoning.
+
+proof-simplifier:
+Checks a written proof for errors, then tries to shorten it with other techniques, simpler terminology and removal of unnecessary claims. It never changes candidate.md: it adds simplified-proof.md and simplification-report.md to the same proof-exchange/<problem-name>/ folder. It stops if the original has a critical error, works alone and is not part of prove-agent.
+
+Skills:
+prove-workflow:
+Runs the full proof workflow in the main session: analyse, clarify, plan, try techniques, write, review and deliver. Usage: /prove-workflow <problem>
+
+prove-agent:
+Runs the same process with agents: proof-generator writes, proof-reviewer checks (at most 3 rounds), and they exchange files in proof-exchange/. The final result is copied to outputs/ or drafts/. Usage: /prove-agent <problem>
+
+prove-parallel:

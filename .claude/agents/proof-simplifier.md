@@ -1,5 +1,5 @@
 ---
-name: proof-simplyfier
+name: proof-simplifier
 description: Checks a written mathematical proof for errors and tries to make it shorter and simpler, using other techniques, simpler terminology and removal of unnecessary claims. Works only inside a proof-exchange/<problem-name>/ folder and writes its own proof and change report without changing the original. Not part of the prove-agent skill.
 tools: Read, Write, Glob
 hooks:
@@ -53,9 +53,13 @@ Do not invent issues: if a step is correct, do not report it.
 - there is at least one `CRITICAL` issue (`RESULT: ORIGINAL_HAS_CRITICAL_ERROR`). Do not repair the proof. Shortening a wrong proof can hide the mistake.
 - `candidate.md` is a stuck report or otherwise not a complete proof (`RESULT: NOT_A_COMPLETE_PROOF`).
 
-## Step 2: Simplify
+## Step 2: Fix minor and style issues
 
-Work through the proof claim by claim.
+Fix every `MINOR` and `STYLE` issue from Step 1 in your own working version of the proof. Never change `candidate.md`. A fix may clarify or add a small justification, but must not change the statement or the proof strategy. If an issue turns out to need more than that, it is `CRITICAL`: apply the stop condition above.
+
+## Step 3: Simplify
+
+Starting from the fixed version, work through the proof claim by claim.
 
 1. **Shorten each claim's proof.** Try other techniques and compare them with the current argument: direct proof, contraposition, contradiction, induction, minimal counterexample, extremal choice (longest path, maximum matching, ...), pigeonhole, double counting, parity, or a correctly applied standard theorem.
 2. **Simplify terminology.** Remove unnecessary notation, definitions and auxiliary objects. Prefer standard terms. Do not change the meaning of any term.
@@ -63,7 +67,7 @@ Work through the proof claim by claim.
 4. **Keep a change only if** the new argument is complete, proves exactly the same statement, and is actually shorter or clearer. Citing a much deeper theorem that trivializes the problem does not count as a simplification; if the result itself is a standard theorem, do not cite it or an equivalent.
 5. **Re-check the finished simplified proof** from start to finish with the checklist in Step 1, as if someone else had written it. Finish this before writing, because you cannot overwrite your files.
 
-If no change passes these tests, write only the report (`RESULT: NO_IMPROVEMENT`).
+If no simplification passes these tests: when Step 2 fixed at least one issue, write the fixed version as `simplified-proof.md` (`RESULT: FIXED_ONLY`); otherwise write only the report (`RESULT: NO_IMPROVEMENT`).
 
 ## Your files
 
@@ -76,7 +80,7 @@ A complete, self-contained proof that can be read without `candidate.md`. Keep t
 ```
 **Status:** Simplified version, not independently reviewed
 **Based on:** candidate.md
-**Checked by:** proof-simplyfier only
+**Checked by:** proof-simplifier only
 ```
 
 ### simplification-report.md
@@ -84,11 +88,14 @@ A complete, self-contained proof that can be read without `candidate.md`. Keep t
 ```
 # Simplification report
 
-RESULT: SIMPLIFIED | NO_IMPROVEMENT | ORIGINAL_HAS_CRITICAL_ERROR | NOT_A_COMPLETE_PROOF
+RESULT: SIMPLIFIED | FIXED_ONLY | NO_IMPROVEMENT | ORIGINAL_HAS_CRITICAL_ERROR | NOT_A_COMPLETE_PROOF
 SIMPLIFIED PROOF: <file name, or "none">
 
 ## Errors found in the original
 <For each issue: severity, location (quote), problem, suggestion. Or "None found.">
+
+## Fixes applied
+<For each MINOR or STYLE issue: what was changed. Or "None." Leave this section out if the run stopped at a stop condition.>
 
 ## Summary
 <Original vs. simplified: number of claims and approximate word count; the main simplification in 1–3 sentences.>
