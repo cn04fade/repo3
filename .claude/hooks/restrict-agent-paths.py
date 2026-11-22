@@ -2,7 +2,7 @@
 
 Usage (from an agent's frontmatter):
     python -I restrict-agent-paths.py <role>
-where <role> is "generator" or "reviewer".
+where <role> is "generator", "reviewer" or "simplifier".
 
 Claude Code passes the tool call as JSON on stdin. The script exits with
 code 0 to allow the call, or with code 2 to block it; on a block, the
@@ -11,6 +11,7 @@ message on stderr is shown to the agent so it knows why.
 
 import json
 import os
+import re
 import sys
 
 # Folders (relative to the project root) each role may read from / write to.
@@ -27,9 +28,20 @@ RULES = {
         # generator's reasoning.
         "forbidden_names": ["generator-report.md"],
     },
+    "simplifier": {
+        "read": ["proof-exchange"],
+        "write": ["proof-exchange"],
+        "forbidden_names": [],
+        # The simplifier works from the problem and the proof only, and may
+        # create only its own files, so the original proof stays untouched.
+        "read_names": r"problem\.md|candidate\.md",
+        "write_names": r"(simplified-proof|simplification-report)(-[2-9]|-[1-9][0-9]+)?\.md",
+        "no_overwrite": True,
+    },
 }
 
 WRITE_TOOLS = {"Write", "Edit", "NotebookEdit"}
+FILE_TOOLS = WRITE_TOOLS | {"Read"}
 
 
 def block(message):
@@ -106,6 +118,12 @@ def main():
                   f"(requested: {raw}).")
         if os.path.basename(path) in rules["forbidden_names"]:
             block(f"Blocked: the {role} agent may not read {os.path.basename(path)}.")
+        name_pattern = rules.get("write_names" if is_write else "read_names")
+        if name_pattern and tool_name in FILE_TOOLS and not re.fullmatch(name_pattern, os.path.basename(path)):
+            action = "write" if is_write else "read"
+            block(f"Blocked: the {role} agent may not {action} {os.path.basename(path)}.")
+        if is_write and rules.get("no_overwrite") and os.path.exists(path):
+            block(f"Blocked: {os.path.basename(path)} already exists. Use the next free number.")
 
     sys.exit(0)
 
