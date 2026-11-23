@@ -2,7 +2,7 @@
 
 Usage (from an agent's frontmatter):
     python -I restrict-agent-paths.py <role>
-where <role> is "generator", "reviewer" or "simplifier".
+where <role> is "generator", "reviewer", "simplifier" or "supervisor".
 
 Claude Code passes the tool call as JSON on stdin. The script exits with
 code 0 to allow the call, or with code 2 to block it; on a block, the
@@ -34,9 +34,18 @@ RULES = {
         "forbidden_names": [],
         # The simplifier works from the problem and the proof only, and may
         # create only its own files, so the original proof stays untouched.
-        "read_names": r"problem\.md|candidate\.md",
-        "write_names": r"(simplified-proof|simplification-report)(-[2-9]|-[1-9][0-9]+)?\.md",
+        "read_names": r"problem\.md|candidate\.md|simplification-report(-[2-9]|-[1-9][0-9]+)?\.md",
+        "write_names": r"(simplified-proof|simplified-partial-results|simplification-report)(-[2-9]|-[1-9][0-9]+)?\.md",
         "no_overwrite": True,
+        # Exception: the newest report may be corrected; older ones may not.
+        "correctable": r"simplification-report(-[2-9]|-[1-9][0-9]+)?\.md",
+    },
+    "supervisor": {
+        "read": ["proof-exchange", "workflows", "resources"],
+        "write": ["proof-exchange"],
+        "forbidden_names": [],
+        # The supervisor may read every answer but can never change one.
+        "write_names": r"claims\.md|supervisor-review\.md|proven-claims\.md|candidate\.md",
     },
 }
 
@@ -71,6 +80,21 @@ def is_inside(path, folder):
         return os.path.commonpath([path, folder]) == folder
     except ValueError:  # different drives
         return False
+
+
+def run_number(file_name):
+    """Return the run number of a numbered file; no suffix means run 1."""
+    match = re.search(r"-(\d+)\.md$", file_name)
+    return int(match.group(1)) if match else 1
+
+
+def is_newest_correctable(path, pattern):
+    """True if path is the highest-numbered file matching pattern in its folder."""
+    if not pattern or not re.fullmatch(pattern, os.path.basename(path)):
+        return False
+    names = [name.lower() for name in os.listdir(os.path.dirname(path))]
+    numbers = [run_number(name) for name in names if re.fullmatch(pattern, name)]
+    return run_number(os.path.basename(path)) == max(numbers)
 
 
 def target_paths(tool_name, tool_input):
@@ -122,7 +146,8 @@ def main():
         if name_pattern and tool_name in FILE_TOOLS and not re.fullmatch(name_pattern, os.path.basename(path)):
             action = "write" if is_write else "read"
             block(f"Blocked: the {role} agent may not {action} {os.path.basename(path)}.")
-        if is_write and rules.get("no_overwrite") and os.path.exists(path):
+        if (is_write and rules.get("no_overwrite") and os.path.exists(path)
+                and not is_newest_correctable(path, rules.get("correctable"))):
             block(f"Blocked: {os.path.basename(path)} already exists. Use the next free number.")
 
     sys.exit(0)

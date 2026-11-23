@@ -36,7 +36,7 @@ A hook blocks every other access. Never write to `outputs/` or `drafts/`; the ma
 
 Read `workflows/proof-workflow.md` completely and follow its phases. Use the templates in `workflows/templates/`. Check `resources/` for reference material the user has provided.
 
-You are called in one of two modes. The prompt tells you which.
+You are called in one of three modes. The prompt tells you which.
 
 ### Mode A: new problem
 
@@ -58,6 +58,41 @@ Your prompt names the review file to address, e.g. `review-round-1.md`.
 - For each issue, either fix the proof in `candidate.md` or write a precise rebuttal explaining why the step is correct.
 - If a `CRITICAL` issue cannot be fixed, the proof is not complete: turn `candidate.md` into a stuck report and mark the gap with **[GAP]**.
 - Repeat the self-review checklist after your changes, then overwrite `generator-report.md`.
+
+### Mode C: single claim (used by prove-parallel)
+
+Your prompt gives you a round number `<n>` and a generator number `<s>`. In this mode, these rules replace the file rules above and the sections on `candidate.md` and `generator-report.md`.
+
+- **Read** `problem.md`, `proven-claims.md` (if it exists), `round-<n>/claims.md`, `workflows/` and `resources/`.
+- Work **only on the assignment for generator `<s>`** in `claims.md`. Use only what its "May use" line allows, and the given definitions.
+- Do **not** read other generators' files; your attempt should be independent.
+- **Write only** `round-<n>/generator-<s>.md`. Do not create or change any other file.
+- Apply workflow Phases 4–6 to the claim: try techniques, write the proof, go through the self-review checklist.
+- If the claim is false, say so and give a verified counterexample. If it is ambiguous, use `STATUS: UNCLEAR` and explain why.
+
+Write `generator-<s>.md` in this form:
+
+```
+# Round <n>, generator <s>
+
+STATUS: PROVEN | PARTIAL | DISPROVEN | UNCLEAR
+CLAIM: <ID and exact statement>
+USED: <proven claims and standard theorems>
+
+## Proof
+<Full proof, or the counterexample with verification. For PARTIAL: only what is fully proven.>
+
+## Gap
+<For PARTIAL or UNCLEAR: **[GAP]** the exact missing statement. Otherwise "none".>
+
+## Attempts
+<One line per technique tried, and the result.>
+
+## Suggested next claims
+<Statements that would close the gap, or "none".>
+```
+
+Finish your run by returning the `STATUS:` line and the path of your file.
 
 ## What to write in candidate.md
 

@@ -10,6 +10,9 @@ Strictly and independently checks a written proof for errors and gaps, then give
 proof-simplifier:
 Checks a written proof for errors, then tries to shorten it with other techniques, simpler terminology and removal of unnecessary claims. It never changes candidate.md: it adds simplified-proof.md and simplification-report.md to the same proof-exchange/<problem-name>/ folder. It stops if the original has a critical error, works alone and is not part of prove-agent.
 
+proof-supervisor:
+Leads a parallel proof attempt: splits the problem into claims, checks the answers of the proof-generators, connects them into one continuous proof, and turns open questions into claims for the next round (at most 5 rounds). Used by prove-parallel.
+
 Skills:
 prove-workflow:
 Runs the full proof workflow in the main session: analyse, clarify, plan, try techniques, write, review and deliver. Usage: /prove-workflow <problem>
@@ -18,3 +21,4 @@ prove-agent:
 Runs the same process with agents: proof-generator writes, proof-reviewer checks (at most 3 rounds), and they exchange files in proof-exchange/. The final result is copied to outputs/ or drafts/. Usage: /prove-agent <problem>
 
 prove-parallel:
+Coordinates proof-supervisor and up to 3 parallel proof-generators, each with its own file in proof-exchange/, for at most 5 rounds. proof-reviewer checks the finished proof, then proof-simplifier simplifies it; if the proof failed, it improves the proven parts. Usage: /prove-parallel <problem>
