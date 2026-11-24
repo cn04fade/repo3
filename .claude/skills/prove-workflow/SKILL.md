@@ -23,9 +23,9 @@ Read `workflows/proof-workflow.md` completely before starting, and follow its ph
    - Go through the self-review checklist in the workflow document.
    - Then launch the `proof-reviewer` agent. Give it **only** the formal statement, the definitions, and the written proof (not your reasoning). Fix or explicitly rebut every issue it reports. Repeat up to 3 rounds.
 7. **Deliver.**
-   - Complete proof → save to `outputs/<descriptive-name>.md` and give a short summary in the chat.
-   - No complete proof → save a stuck report to `drafts/<descriptive-name>-attempt.md` using `workflows/templates/stuck-report-template.md`, and in the chat explain the approaches, the partial results, and exactly where and why it got stuck.
-   - Statement false → save the counterexample to `outputs/<descriptive-name>-counterexample.md`.
+   - Complete proof → save to `outputs/prove-workflow/<descriptive-name>.md` and give a short summary in the chat.
+   - No complete proof → save a stuck report to `drafts/prove-workflow/<descriptive-name>-attempt.md` using `workflows/templates/stuck-report-template.md`, and in the chat explain the approaches, the partial results, and exactly where and why it got stuck.
+   - Statement false → save the counterexample to `outputs/prove-workflow/<descriptive-name>-counterexample.md`.
 
 File names: lowercase, hyphens instead of spaces, no special characters.
 

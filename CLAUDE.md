@@ -40,13 +40,13 @@ I am a student currently working on a groub project that focuses on AI-assisted 
 Contain workflow instructions, agent definitions and process documents
 
 /outputs
-Contains completed work, generated proofs and proof approaches
+Contains completed work, generated proofs and proof approaches. Each skill has its own subfolder: `outputs/prove-workflow/`, `outputs/prove-agent/` and `outputs/prove-parallel/`
 
 /resources
 Contain reference material, source documents and examples
 
 /drafts
-Contain work in progress and temporary files
+Contain work in progress and temporary files. Each skill has its own subfolder: `drafts/prove-workflow/`, `drafts/prove-agent/` and `drafts/prove-parallel/`
 
 /pdfs
 Contain PDF exports of proofs and proof attempts
@@ -62,7 +62,7 @@ If you are given a mathematical problem, work in the following steps:
 5. try to use related lemmas
 6. If you find a proof try to structure it as clear as possible, If not give all the partial results as an output and mark the parts where you failed to continue
 7. Review the output
-8. Deliver the final result as a file in the outputs folder
+8. Deliver the final result as a file in the matching subfolder of the outputs folder
 
 Never prioritize speed over quality.
 
@@ -71,5 +71,5 @@ Never prioritize speed over quality.
 - The full process is defined in `workflows/proof-workflow.md`; output templates are in `workflows/templates/`.
 - Start it with `/prove-workflow <problem>` (skill in `.claude/skills/prove-workflow/`). Also follow it when a problem is given without the command.
 - Finished proofs are checked by the `proof-reviewer` agent (`.claude/agents/proof-reviewer.md`) before delivery.
-- Complete proofs go to `outputs/`; incomplete attempts (stuck reports) go to `drafts/` and are also summarised in the chat.
+- Complete proofs go to the subfolder of the skill that produced them: `outputs/prove-workflow/` (also for problems given without a command), `outputs/prove-agent/` or `outputs/prove-parallel/`. Incomplete attempts (stuck reports) go to the matching subfolder, `drafts/prove-workflow/`, `drafts/prove-agent/` or `drafts/prove-parallel/`, and are also summarised in the chat.
 - Write math in Markdown with LaTeX (`$...$`, `$$...$$`).

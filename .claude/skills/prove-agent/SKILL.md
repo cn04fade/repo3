@@ -47,10 +47,10 @@ The agents never write to `outputs/` or `drafts/`. Only you copy the final resul
    - At most 3 review rounds in total.
 
 5. **Deliver.** Copy `candidate.md` to its final place; use the `SUGGESTED FILE NAME` from `generator-report.md` as `<name>`. Keep the problem folder in `proof-exchange/` as the record of how the result was reached.
-   - **Accepted proof:** copy to `outputs/<name>.md`. In the copy, set **Status:** `Proven` and **Reviewed by:** `self-review + proof-reviewer agent (<number> rounds)`.
-   - **Accepted counterexample:** copy to `outputs/<name>-counterexample.md` in the same way.
-   - **Still rejected after 3 rounds:** the result is incomplete. Copy to `drafts/<name>-attempt.md`, set **Status:** `Incomplete`, and add a section "Open review issues" listing each remaining critical issue, marked **[GAP]**.
-   - **Status `INCOMPLETE` from the generator:** copy the stuck report to `drafts/<name>-attempt.md`.
+   - **Accepted proof:** copy to `outputs/prove-agent/<name>.md`. In the copy, set **Status:** `Proven` and **Reviewed by:** `self-review + proof-reviewer agent (<number> rounds)`.
+   - **Accepted counterexample:** copy to `outputs/prove-agent/<name>-counterexample.md` in the same way.
+   - **Still rejected after 3 rounds:** the result is incomplete. Copy to `drafts/prove-agent/<name>-attempt.md`, set **Status:** `Incomplete`, and add a section "Open review issues" listing each remaining critical issue, marked **[GAP]**.
+   - **Status `INCOMPLETE` from the generator:** copy the stuck report to `drafts/prove-agent/<name>-attempt.md`.
    - Add a line `**Working folder:** proof-exchange/<problem-name>/` below the status line of the copy.
 
 6. **Report to the user** in simple language:

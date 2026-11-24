@@ -109,17 +109,19 @@ After the self-review, the `proof-reviewer` agent (`.claude/agents/proof-reviewe
 
 ## Phase 7 — Deliver
 
+The `outputs/` and `drafts/` paths below apply to `/prove-workflow` and to problems given without a command. `/prove-agent` and `/prove-parallel` deliver to their own subfolders of `outputs/` and `drafts/`, as defined in their skills.
+
 **If a complete proof was found:**
 
-- Save it as `outputs/<descriptive-name>.md` (lowercase, hyphens, no special characters), e.g. `outputs/trees-have-two-leaves.md`.
+- Save it as `outputs/prove-workflow/<descriptive-name>.md` (lowercase, hyphens, no special characters), e.g. `outputs/prove-workflow/trees-have-two-leaves.md`.
 - In the chat, give a short summary: the main idea and the file path.
 
 **If no complete proof was found:**
 
-- Save a stuck report as `drafts/<descriptive-name>-attempt.md` using `workflows/templates/stuck-report-template.md`.
+- Save a stuck report as `drafts/prove-workflow/<descriptive-name>-attempt.md` using `workflows/templates/stuck-report-template.md`.
 - In the chat, give an overview: the approaches tried, the partial results obtained, and **exactly** which step fails and why.
 - Never present an incomplete proof as complete. Mark every gap clearly with **[GAP]**.
 
 **If the statement turned out to be false:**
 
-- Save the counterexample with its verification as `outputs/<descriptive-name>-counterexample.md`, and suggest a corrected statement if one is apparent.
+- Save the counterexample with its verification as `outputs/prove-workflow/<descriptive-name>-counterexample.md`, and suggest a corrected statement if one is apparent.

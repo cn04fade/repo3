@@ -42,7 +42,7 @@ Agents never write to `outputs/` or `drafts/`. Only you copy the final result th
 
 ### 1. Set up
 
-Choose a descriptive `<problem-name>` (lowercase, hyphens, no special characters) that is not yet used in `proof-exchange/`, `outputs/` or `drafts/`; if needed, append `-2`, `-3`, .... Create the folder and `round-1/`. Write `problem.md` with a heading `## Problem` containing the problem exactly as the user gave it.
+Choose a descriptive `<problem-name>` (lowercase, hyphens, no special characters) that is not yet used in `proof-exchange/`, `outputs/prove-parallel/` or `drafts/prove-parallel/`; if needed, append `-2`, `-3`, .... Create the folder and `round-1/`. Write `problem.md` with a heading `## Problem` containing the problem exactly as the user gave it.
 
 ### 2. Plan
 
@@ -109,15 +109,15 @@ Use `<name>` = the supervisor's `SUGGESTED FILE NAME`, or `<problem-name>` if th
 
 | Result | Copy | To |
 |---|---|---|
-| Accepted proof | `candidate.md` | `outputs/<name>.md`, with **Status:** `Proven` and **Reviewed by:** `proof-supervisor + proof-reviewer agent` |
-| Accepted counterexample | `candidate.md` | `outputs/<name>-counterexample.md`, with the same status fields |
-| Its simplified version, if one was written | `simplified-proof.md` | `outputs/<name>-simplified.md` or `outputs/<name>-counterexample-simplified.md` |
-| Failed | `candidate.md` | `drafts/<name>-attempt.md` |
-| Its simplified partial results, if written | `simplified-partial-results.md` | `drafts/<name>-attempt-simplified.md` |
+| Accepted proof | `candidate.md` | `outputs/prove-parallel/<name>.md`, with **Status:** `Proven` and **Reviewed by:** `proof-supervisor + proof-reviewer agent` |
+| Accepted counterexample | `candidate.md` | `outputs/prove-parallel/<name>-counterexample.md`, with the same status fields |
+| Its simplified version, if one was written | `simplified-proof.md` | `outputs/prove-parallel/<name>-simplified.md` or `outputs/prove-parallel/<name>-counterexample-simplified.md` |
+| Failed | `candidate.md` | `drafts/prove-parallel/<name>-attempt.md` |
+| Its simplified partial results, if written | `simplified-partial-results.md` | `drafts/prove-parallel/<name>-attempt-simplified.md` |
 
 A simplified file keeps its status "not independently reviewed". Set its `**Based on:**` line to the path of the copied original.
 
-If an accepted proof was treated as failed in step 6, deliver `candidate.md` to `drafts/<name>-attempt.md` with **Status:** `Incomplete` and add a section "Open review issues" with the simplifier's critical issue, marked **[GAP]**.
+If an accepted proof was treated as failed in step 6, deliver `candidate.md` to `drafts/prove-parallel/<name>-attempt.md` with **Status:** `Incomplete` and add a section "Open review issues" with the simplifier's critical issue, marked **[GAP]**.
 
 ### 8. Report to the user
 
