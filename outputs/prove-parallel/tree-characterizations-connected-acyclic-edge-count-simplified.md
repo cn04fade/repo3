@@ -2,7 +2,7 @@
 
 **Status:** Simplified version, not independently reviewed
 **Working folder:** proof-exchange/tree-characterizations-connected-acyclic-edge-count/
-**Based on:** outputs/tree-characterizations-connected-acyclic-edge-count.md
+**Based on:** outputs/prove-parallel/tree-characterizations-connected-acyclic-edge-count.md
 **Checked by:** proof-simplifier only
 
 ## Problem
